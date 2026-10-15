@@ -4,15 +4,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.RenderTickCounter;
-import net.minecraft.client.render.RenderLayers;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.VertexRendering;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.shape.VoxelShapes;
 import net.vivek.hypernova.config.HypernovaConfig;
 import net.vivek.hypernova.util.CpsTracker;
 import net.vivek.hypernova.util.MotionBlurManager;
@@ -30,24 +21,22 @@ public class InGameHudMixin {
             return;
         }
 
-        // 1. Update CPS clicks every frame
         CpsTracker.updateFromWindow(client);
 
         int screenWidth = context.getScaledWindowWidth();
         int screenHeight = context.getScaledWindowHeight();
 
-        // 2. Render Motion Blur
         MotionBlurManager.renderLightweightMotionTrail(context, screenWidth, screenHeight);
 
         if (client.getDebugHud().shouldShowDebugHud() || !HypernovaConfig.hudEnabled) {
             return;
         }
 
-        // 3. Clean FPS & CPS HUD (No background, No "Hypernova" text, Custom Position support)
         int fps = client.getCurrentFps();
         int lmb = CpsTracker.getLeftCps();
         int rmb = CpsTracker.getRightCps();
 
+        // Sirf FPS aur CPS dikhega, "Hypernova" text aur background box hata diya gaya hai
         String hudText = String.format("%d FPS | %d : %d CPS", fps, lmb, rmb);
         int textWidth = client.textRenderer.getWidth(hudText);
 
@@ -59,7 +48,7 @@ public class InGameHudMixin {
             y = screenHeight - 16;
         }
 
-        // Render clean text with shadow and accent color
+        // Transparent background - sirf clean text with shadow
         context.drawTextWithShadow(client.textRenderer, hudText, x, y, 0xFFFFFFFF);
     }
 }
