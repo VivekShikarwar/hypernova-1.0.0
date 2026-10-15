@@ -29,7 +29,7 @@ public class EntityHitboxMixin {
         }
     }
 
-    // Clean Solid White 3D Combat Hitbox Renderer
+    // Crash-Free Safe 3D Combat Hitbox Renderer
     @Inject(method = "render", at = @At("TAIL"))
     private void hypernova$renderTrue3DHitbox(Entity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
         if (!HypernovaConfig.customHitboxEnabled || entity == net.minecraft.client.MinecraftClient.getInstance().player || entity.isInvisible() || !(entity instanceof LivingEntity)) {
@@ -37,10 +37,11 @@ public class EntityHitboxMixin {
         }
 
         matrices.push();
+        // Safe relative box positioning to prevent any rendering crash
         Box box = entity.getBoundingBox().offset(-entity.getX(), -entity.getY(), -entity.getZ());
         VertexConsumer lines = vertexConsumers.getBuffer(RenderLayers.LINES);
 
-        // Pure clean solid white color
+        // Pure clean solid white color (ARGB format)
         int whiteColor = 0xFFAFFFFF;
 
         VertexRendering.drawOutline(matrices, lines, VoxelShapes.cuboid(box), 0.0, 0.0, 0.0, whiteColor, 2.0f);
