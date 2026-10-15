@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "hypernova",
+  "version": "${version}",
+  "name": "Hypernova",
+  "description": "Lightweight PvP & Performance Mod featuring FPS Counter, CPS Counter, Custom Hitboxes, and Smooth Motion Blur. Made by Not_Vivek00.",
+  "authors": [
+    "Not_Vivek00"
+  ],
+  "contact": {
+    "homepage": "https://github.com/Not_Vivek00"
+  },
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "net.vivek.hypernova.HypernovaClient"
+    ]
+  },
+  "mixins": [
+    "hypernova.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.1",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
