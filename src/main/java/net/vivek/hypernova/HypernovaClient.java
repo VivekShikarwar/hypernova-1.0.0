@@ -20,27 +20,26 @@ public class HypernovaClient implements ClientModInitializer {
                 "key.hypernova.toggle_hitbox",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_F6,
-                "category.hypernova.main"
+                KeyBinding.Category.GAMEPLAY
         ));
 
         toggleMotionBlurKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.hypernova.toggle_motionblur",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_F7,
-                "category.hypernova.main"
+                KeyBinding.Category.GAMEPLAY
         ));
 
         toggleHudKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.hypernova.toggle_hud",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_F8,
-                "category.hypernova.main"
+                KeyBinding.Category.GAMEPLAY
         ));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (toggleHitboxKey.wasPressed()) {
                 HypernovaConfig.customHitboxEnabled = !HypernovaConfig.customHitboxEnabled;
-                client.getEntityRenderDispatcher().setRenderHitboxes(HypernovaConfig.customHitboxEnabled);
                 if (client.player != null) {
                     client.player.sendMessage(Text.literal("§b[Hypernova] §fCustom Hitboxes: " + (HypernovaConfig.customHitboxEnabled ? "§aON" : "§cOFF")), true);
                 }
